@@ -5,6 +5,7 @@ const User = require('./models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const auth = require('./middleware/auth');
 // const config = require('./config/key');
 require('dotenv').config();
 
@@ -32,7 +33,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!!!');
 });
 
-app.post('/register', async (req, res) => {
+app.post('/api/users/signup', async (req, res) => {
   try {
     const user = new User(req.body);
     //비밀번호 암호화
@@ -49,7 +50,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/api/users/signin', async (req, res) => {
   try {
     //데이터베이스에 해당하는 이메일의 사용자가 있는지 확인
     const user = await User.findOne({ email: req.body.email }).exec();
@@ -75,6 +76,28 @@ app.post('/login', async (req, res) => {
       .json({ loginSuccess: true, userId: user._id });
   } catch (error) {
     return res.status(400).send(error);
+  }
+});
+
+app.get('/api/users/auth', auth, (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image,
+  });
+});
+
+app.get('/api/users/signout', auth, async (req, res) => {
+  try {
+    await User.findOneAndUpdate({ _id: req.user._id }, { token: '' });
+    return res.status(200).send({ success: true });
+  } catch (error) {
+    return res.json({ success: false, error });
   }
 });
 
