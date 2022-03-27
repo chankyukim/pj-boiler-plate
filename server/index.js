@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const auth = require('./middleware/auth');
+const cors = require('cors');
 // const config = require('./config/key');
 require('dotenv').config();
 
@@ -28,8 +29,16 @@ app.use(express.urlencoded({ extended: false }));
 //cookie-parser
 app.use(cookieParser());
 
+//cors
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credential: true,
+  })
+);
+
 //route
-app.get('/', (req, res) => {
+app.get('/api/hello', (req, res) => {
   res.send('Hello World!!!');
 });
 
