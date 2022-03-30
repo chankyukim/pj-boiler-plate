@@ -69,7 +69,7 @@ const LoginPage = () => {
         <label>Email</label>
         <input type="text" name="email" value={inputs.email} onChange={onChange} />
         <label>Password</label>
-        <input type="text" name="password" value={inputs.password} onChange={onChange} />
+        <input type="password" name="password" value={inputs.password} onChange={onChange} />
         <button>로그인</button>
       </Form>
     </Container>
