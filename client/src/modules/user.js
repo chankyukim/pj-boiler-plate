@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const LOGIN_USER = 'LOGIN_USER';
-// const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-// const LOGIN_FAILURE = 'LOGIN_FAILURE';
+const SIGNUP_USER = 'SIGNUP_USER';
 
 export const loginUser = dataToSubmit => async () => {
   try {
@@ -17,10 +16,25 @@ export const loginUser = dataToSubmit => async () => {
   }
 };
 
+export const signUpUser = dataToSubmit => async () => {
+  try {
+    const { data } = await axios.post('/api/users/signup', dataToSubmit);
+
+    return {
+      type: SIGNUP_USER,
+      payload: data,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const user = (state = {}, action) => {
   switch (action.type) {
     case LOGIN_USER:
       return { ...state, loginSuccess: action.payload };
+    case SIGNUP_USER:
+      return { ...state, success: action.payload };
     default:
       return state;
   }
