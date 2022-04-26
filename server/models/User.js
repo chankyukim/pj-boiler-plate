@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const userSchema = mongoose.Schema({
-  name: {
+const userSchema = new Schema({
+  username: {
     type: String,
     maxlength: 50,
   },
@@ -14,21 +15,17 @@ const userSchema = mongoose.Schema({
     type: String,
     minlength: 5,
   },
-  lastname: {
-    type: String,
-    maxlength: 50,
-  },
-  role: {
-    type: Number,
-    default: 0,
+  roles: {
+    User: {
+      type: Nuber,
+      default: 2001,
+    },
+    Editor: Number,
+    Admin: Number,
   },
   image: String,
-  token: {
-    type: String,
-  },
-  tokenExp: {
-    type: Number,
-  },
+  refreshToken: String,
+  refreshTokenExp: String,
 });
 
 const User = mongoose.model('User', userSchema);
