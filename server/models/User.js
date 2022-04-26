@@ -17,7 +17,7 @@ const userSchema = new Schema({
   },
   roles: {
     User: {
-      type: Nuber,
+      type: Number,
       default: 2001,
     },
     Editor: Number,
