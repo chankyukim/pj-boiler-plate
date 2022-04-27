@@ -1,12 +1,7 @@
-import { useState } from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
-import PrivateRoute from './components/PrivateRoute';
-import Profile from './components/Profile';
 import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
-import Auth from './hoc/Auth';
 
 function App() {
   // const HocLandingPage = Auth(LandingPage, null);
@@ -20,9 +15,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/Detail" element={<Profile />} />
-          </Route>
         </Routes>
       </BrowserRouter>
     </div>

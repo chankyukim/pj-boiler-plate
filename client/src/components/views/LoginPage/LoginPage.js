@@ -1,78 +1,35 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { loginUser } from '../../../modules/user';
-import { useNavigate } from 'react-router-dom';
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
+import React from 'react';
+import AuthLayout from '../../auth/AuthLayout';
+import BottomBox from '../../auth/BottomBox';
+import FormBox from '../../auth/FormBox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import Input from '../../auth/Input';
+import Button from '../../auth/Button';
+import SubTitle from '../../auth/SubTitle';
+import Seperator from '../../auth/Seperator';
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
+const handleSubmit = e => {
+  e.preventDefault();
+};
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-  });
-
-  const onSubmit = async e => {
-    e.preventDefault();
-
-    onReset();
-
-    const body = {
-      email: inputs.email,
-      password: inputs.password,
-    };
-
-    try {
-      const {
-        payload: { loginSuccess },
-      } = await dispatch(loginUser(body));
-
-      if (loginSuccess) {
-        navigate('/');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onChange = e => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onReset = e => {
-    setInputs({
-      email: '',
-      password: '',
-    });
-  };
-
   return (
-    <Container>
-      <Form onSubmit={onSubmit}>
-        <label>Email</label>
-        <input type="text" name="email" value={inputs.email} onChange={onChange} />
-        <label>Password</label>
-        <input type="password" name="password" value={inputs.password} onChange={onChange} />
-        <button>로그인</button>
-      </Form>
-    </Container>
+    <AuthLayout>
+      <FormBox>
+        <div>
+          <FontAwesomeIcon icon={faRightToBracket} size="3x" />
+        </div>
+        <SubTitle text="Sign In" />
+        <form onSubmit={handleSubmit}>
+          <Input type="text" placeholder="Email" />
+          <Input type="password" placeholder="Password" />
+          <Button btnText="Sign In" />
+        </form>
+        <Seperator />
+      </FormBox>
+      <BottomBox cta="Don't have an account" linkText="Sign Up" link="/signup"></BottomBox>
+    </AuthLayout>
   );
 };
 

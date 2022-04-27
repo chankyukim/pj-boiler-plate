@@ -6,13 +6,14 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reduxThunk from 'redux-thunk';
 import rootReducer from './modules';
-import './index.css';
+import { GlobalStyle } from './styles';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(reduxThunk)));
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <GlobalStyle />
       <App />
     </Provider>
   </React.StrictMode>,
